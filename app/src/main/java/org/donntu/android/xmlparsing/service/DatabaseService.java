@@ -12,7 +12,7 @@ import org.donntu.android.xmlparsing.component.InstitutionEntity;
 import org.donntu.android.xmlparsing.component.LocationTagEntity;
 import org.donntu.android.xmlparsing.component.NameTagEntity;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DatabaseService extends SQLiteOpenHelper {
@@ -77,8 +77,9 @@ public class DatabaseService extends SQLiteOpenHelper {
 
     public void insert(List<InstitutionEntity> data) {
         Log.d(XML_PARSE_LOG, "Отправка объектов в базу начата");
-        SQLiteDatabase db = this.getWritableDatabase();
+        long start = System.currentTimeMillis();
 
+        SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
 
         for (InstitutionEntity entity : data) {
@@ -119,11 +120,15 @@ public class DatabaseService extends SQLiteOpenHelper {
 
         db.close();
         Log.d(XML_PARSE_LOG, "Отправка объектов в базу завершена");
+        long end = System.currentTimeMillis();
+        Log.d(XML_PARSE_LOG, "Время операции: " + (double)(end - start) / 1000);
     }
 
     public List<InstitutionEntity> select() {
         Log.d(XML_PARSE_LOG, "Формирование выборки начато");
-        List<InstitutionEntity> list = new ArrayList<InstitutionEntity>();
+        long start = System.currentTimeMillis();
+
+        List<InstitutionEntity> list = new LinkedList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         Cursor cursor = db.rawQuery(
@@ -170,6 +175,8 @@ public class DatabaseService extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         Log.d(XML_PARSE_LOG, "Формирование выборки окончено");
+        long end = System.currentTimeMillis();
+        Log.d(XML_PARSE_LOG, "Время операции: " + (double)(end - start) / 1000);
         return list;
     }
 

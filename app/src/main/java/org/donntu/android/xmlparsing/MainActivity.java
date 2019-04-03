@@ -35,16 +35,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, 1, 0, "Загрузить файл").setOnMenuItemClickListener(
+        menu.add(0, 1, 0, "Open file").setOnMenuItemClickListener(
                 item -> {
                     FileService.openFileDialog(this, o -> {
-                        Log.d("xmlParseLog", "File path: " + o);
+                        Log.d("xml_parsing", "File path: " + o);
                         databaseService.insert(XMLService.parse((String) o));
                         updateListViewData();
                     });
                     return true;
                 });
-        menu.add(0, 2, 0, "Очистить базу").setOnMenuItemClickListener(item -> {
+        menu.add(0, 2, 0, "Clear").setOnMenuItemClickListener(item -> {
             databaseService.truncate();
             updateListViewData();
             return true;
