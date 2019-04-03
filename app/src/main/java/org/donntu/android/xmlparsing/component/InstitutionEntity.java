@@ -1,4 +1,4 @@
-package com.example.barvius.parsingxml.component;
+package org.donntu.android.xmlparsing.component;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

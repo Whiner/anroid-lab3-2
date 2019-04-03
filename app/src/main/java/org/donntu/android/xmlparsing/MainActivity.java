@@ -1,4 +1,4 @@
-package com.example.barvius.parsingxml;
+package org.donntu.android.xmlparsing;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
-import com.example.barvius.parsingxml.component.InstitutionEntity;
-import com.example.barvius.parsingxml.service.DatabaseService;
-import com.example.barvius.parsingxml.service.FileService;
-import com.example.barvius.parsingxml.service.XMLService;
+import com.donntu.android.xmlparsing.R;
+
+import org.donntu.android.xmlparsing.component.InstitutionEntity;
+import org.donntu.android.xmlparsing.service.DatabaseService;
+import org.donntu.android.xmlparsing.service.FileService;
+import org.donntu.android.xmlparsing.service.XMLService;
 
 import java.util.LinkedList;
 import java.util.List;

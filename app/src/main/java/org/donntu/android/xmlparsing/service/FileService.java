@@ -1,8 +1,8 @@
-package com.example.barvius.parsingxml.service;
+package org.donntu.android.xmlparsing.service;
 
 import android.content.Context;
 
-import com.example.barvius.parsingxml.utils.OpenFileDialog;
+import org.donntu.android.xmlparsing.utils.OpenFileDialog;
 
 import java.util.function.Consumer;
 

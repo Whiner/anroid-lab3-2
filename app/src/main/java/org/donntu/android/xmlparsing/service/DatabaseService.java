@@ -1,4 +1,4 @@
-package com.example.barvius.parsingxml.service;
+package org.donntu.android.xmlparsing.service;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.barvius.parsingxml.component.IdentifiersTagEntity;
-import com.example.barvius.parsingxml.component.InstitutionEntity;
-import com.example.barvius.parsingxml.component.LocationTagEntity;
-import com.example.barvius.parsingxml.component.NameTagEntity;
+import org.donntu.android.xmlparsing.component.IdentifiersTagEntity;
+import org.donntu.android.xmlparsing.component.InstitutionEntity;
+import org.donntu.android.xmlparsing.component.LocationTagEntity;
+import org.donntu.android.xmlparsing.component.NameTagEntity;
 
 import java.util.ArrayList;
 import java.util.List;

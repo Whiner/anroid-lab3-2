@@ -1,4 +1,4 @@
-package com.example.barvius.parsingxml.utils;
+package org.donntu.android.xmlparsing.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

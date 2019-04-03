@@ -1,11 +1,10 @@
-package com.example.barvius.parsingxml.service;
+package org.donntu.android.xmlparsing.service;
 
 import android.util.Log;
 
-import com.example.barvius.parsingxml.component.InstitutionEntity;
-import com.example.barvius.parsingxml.component.LocationTagEntity;
-import com.example.barvius.parsingxml.component.NameTagEntity;
-
+import org.donntu.android.xmlparsing.component.InstitutionEntity;
+import org.donntu.android.xmlparsing.component.LocationTagEntity;
+import org.donntu.android.xmlparsing.component.NameTagEntity;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
