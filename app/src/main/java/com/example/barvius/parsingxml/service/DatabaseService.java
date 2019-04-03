@@ -1,4 +1,4 @@
-package com.example.barvius.parsingxml;
+package com.example.barvius.parsingxml.service;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,49 +15,55 @@ import com.example.barvius.parsingxml.component.NameTagEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBHandler extends SQLiteOpenHelper {
-    public DBHandler(Context context) {
+public class DatabaseService extends SQLiteOpenHelper {
+    private final static String XML_PARSE_LOG = "xml_parsing";
+
+    public DatabaseService(Context context) {
         super(context, "parsing_data", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("PRAGMA foreign_keys=on");
-        db.execSQL("CREATE TABLE Institution (" +
-                "id INTEGER PRIMARY KEY," +
-                "url TEXT," +
-                "i_key TEXT" +
-                ")");
-        db.execSQL("CREATE TABLE Name (" +
-                "id INTEGER PRIMARY KEY," +
-                "institution_id INTEGER NOT NULL," +
-                "name TEXT," +
-                "label TEXT," +
-                "type TEXT," +
-                "FOREIGN KEY (institution_id) REFERENCES Institution(id) ON DELETE CASCADE" +
-                ")");
-        db.execSQL("CREATE TABLE Location (" +
-                "id INTEGER PRIMARY KEY," +
-                "institution_id INTEGER NOT NULL," +
-                "location TEXT," +
-                "country TEXT," +
-                "state TEXT," +
-                "city TEXT," +
-                "lat DOUBLE," +
-                "lon DOUBLE," +
-                "FOREIGN KEY (institution_id) REFERENCES Institution(id)" +
-                ")");
-        db.execSQL("CREATE TABLE Identifiers (" +
-                "id INTEGER PRIMARY KEY," +
-                "institution_id INTEGER NOT NULL," +
-                "identifier TEXT," +
-                "base TEXT," +
-                "FOREIGN KEY (institution_id) REFERENCES Institution(id)" +
-                ")");
-//        db.execSQL("CREATE INDEX institution_id on InstitutionEntity(id)");
-//        db.execSQL("CREATE INDEX institution_id_name on Name(institution_id)");
-//        db.execSQL("CREATE INDEX institution_id_location on Location(institution_id)");
-//        db.execSQL("CREATE INDEX institution_id_identifiers on Identifiers(institution_id)");
+        db.execSQL(
+                "CREATE TABLE Institution (" +
+                        "id INTEGER PRIMARY KEY," +
+                        "url TEXT," +
+                        "i_key TEXT" +
+                        ")"
+        );
+        db.execSQL(
+                "CREATE TABLE Name (" +
+                        "id INTEGER PRIMARY KEY," +
+                        "institution_id INTEGER NOT NULL," +
+                        "name TEXT," +
+                        "label TEXT," +
+                        "type TEXT," +
+                        "FOREIGN KEY (institution_id) REFERENCES Institution(id) ON DELETE CASCADE" +
+                        ")"
+        );
+        db.execSQL(
+                "CREATE TABLE Location (" +
+                        "id INTEGER PRIMARY KEY," +
+                        "institution_id INTEGER NOT NULL," +
+                        "location TEXT," +
+                        "country TEXT," +
+                        "state TEXT," +
+                        "city TEXT," +
+                        "lat DOUBLE," +
+                        "lon DOUBLE," +
+                        "FOREIGN KEY (institution_id) REFERENCES Institution(id)" +
+                        ")"
+        );
+        db.execSQL(
+                "CREATE TABLE Identifiers (" +
+                        "id INTEGER PRIMARY KEY," +
+                        "institution_id INTEGER NOT NULL," +
+                        "identifier TEXT," +
+                        "base TEXT," +
+                        "FOREIGN KEY (institution_id) REFERENCES Institution(id)" +
+                        ")"
+        );
     }
 
     @Override
@@ -70,7 +76,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public void insert(List<InstitutionEntity> data) {
-        Log.d("xmlParseLog", "insert start");
+        Log.d(XML_PARSE_LOG, "Отправка объектов в базу начата");
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.beginTransaction();
@@ -78,7 +84,7 @@ public class DBHandler extends SQLiteOpenHelper {
         for (InstitutionEntity entity : data) {
             ContentValues institutionValues = new ContentValues();
             institutionValues.put("url", entity.getUrl());
-            institutionValues.put("key", entity.getKey());
+            institutionValues.put("i_key", entity.getKey());
             entity.setId(db.insert("Institution", null, institutionValues));
 
             ContentValues nameValues = new ContentValues();
@@ -112,21 +118,22 @@ public class DBHandler extends SQLiteOpenHelper {
         db.endTransaction();
 
         db.close();
-        Log.d("xmlParseLog", "insert end");
+        Log.d(XML_PARSE_LOG, "Отправка объектов в базу завершена");
     }
 
     public List<InstitutionEntity> select() {
-        Log.d("xmlParseLog", "select start");
+        Log.d(XML_PARSE_LOG, "Формирование выборки начато");
         List<InstitutionEntity> list = new ArrayList<InstitutionEntity>();
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
-        Cursor cursor = db.rawQuery("SELECT Institution.id, Institution.i_key, Institution.url, " +
-                "Name.name, Name.label, Name.type," +
-                "Location.location, Location.country, Location.state, Location.city, Location.lat, Location.lon," +
-                "Identifiers.identifier, Identifiers.base " +
-                "FROM Institution, Name, Location, Identifiers " +
-                "WHERE Institution.id = Name.institution_id and Institution.id = Location.institution_id and Institution.id = Identifiers.institution_id " +
-                "GROUP BY Institution.id ", null);
+        Cursor cursor = db.rawQuery(
+                "SELECT Institution.id, Institution.i_key, Institution.url, " +
+                        "Name.name, Name.label, Name.type," +
+                        "Location.location, Location.country, Location.state, Location.city, Location.lat, Location.lon," +
+                        "Identifiers.identifier, Identifiers.base " +
+                        "FROM Institution, Name, Location, Identifiers " +
+                        "WHERE Institution.id = Name.institution_id and Institution.id = Location.institution_id and Institution.id = Identifiers.institution_id " +
+                        "GROUP BY Institution.id ", null);
 
 
         if (cursor.moveToFirst()) {
@@ -162,7 +169,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.endTransaction();
         cursor.close();
         db.close();
-        Log.d("xmlParseLog", "select end");
+        Log.d(XML_PARSE_LOG, "Формирование выборки окончено");
         return list;
     }
 

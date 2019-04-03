@@ -1,8 +1,6 @@
 package com.example.barvius.parsingxml;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +12,10 @@ import com.example.barvius.parsingxml.component.InstitutionEntity;
 import com.example.barvius.parsingxml.component.LocationTagEntity;
 import com.example.barvius.parsingxml.component.NameTagEntity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdapter extends ArrayAdapter<InstitutionEntity> {
-    public ListAdapter(Context context, ArrayList<InstitutionEntity> data) {
+    public ListAdapter(Context context, List<InstitutionEntity> data) {
         super(context, 0, data);
     }
 
@@ -56,20 +54,7 @@ public class ListAdapter extends ArrayAdapter<InstitutionEntity> {
                 location.setTextColor(0xff7E57C2);
                 parentLayout.addView(location);
             }
-            if (locationTagEntity.getLat() != 0 && locationTagEntity.getLon() != 0) {
-                TextView loc = new TextView(parent.getContext());
-                loc.setText("Показать на карте ->");
-                loc.setTextColor(0xff2196F3);
-                loc.setOnClickListener(v -> {
-                    Uri gmmIntentUri = Uri.parse("geo:" + locationTagEntity.getLat() + "," + locationTagEntity.getLon());
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    if (mapIntent.resolveActivity(getContext().getPackageManager()) != null) {
-                        getContext().startActivity(mapIntent);
-                    }
-                });
-                parentLayout.addView(loc);
-            }
+
             if (entity.getUrl() != null) {
                 TextView url = new TextView(parent.getContext());
                 url.setText(entity.getUrl());
